@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 
 import { Check, ChevronsUpDown } from "lucide-react";
+import { toast } from "react-toastify";
 
 const AddScreen = () => {
   const [open, setOpen] = useState(false);
@@ -47,8 +48,25 @@ const AddScreen = () => {
       label: "Dessert",
     },
   ];
+
+  const removeSpacesFromStringStart = (str) => {
+    return str.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+  };
+
   const handleForm = (e) => {
     e.preventDefault();
+    // if (
+    //   name.trim() === "" ||
+    //   (desc.trim() === "") | (ingValue.length === 0) ||
+    //   level.trim() === ""
+    // ) {
+    //   toast.error("All fields are required.");
+    //   return;
+    // }
+
+    console.log(
+      ingValue.split(",").map((ing) => removeSpacesFromStringStart(ing))
+    );
   };
 
   return (
@@ -82,35 +100,28 @@ const AddScreen = () => {
 
           <div>
             <Label className="mb-2" htmlFor="ing">
-              Ingredients
+              Ingredients{" "}
+              <span className="text-gray-600">(Separate With ,)</span>
             </Label>
             <Input
               id="ing"
               value={ingValue}
-              placeholder="Separate with ,"
               onChange={(e) => {
                 setIngValue(e.target.value);
               }}
             />
-
-            <div className="mt-3 w-[70%] bg-red-500 flex shrink-0 ">
-              {ingValue &&
-                ingValue.split(",").map((ingr, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-black p-2 mx-2 my-2 px-2 py-2 rounded-full text-white"
-                  >
-                    {ingr}
-                  </span>
-                ))}
-            </div>
           </div>
 
-          <div className="">
+          <div>
             <Label className="mb-2" htmlFor="level">
               Level
             </Label>
-            <Input id="level" placeholder="Easy, Medium, Hard" />
+            <Input
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+              id="level"
+              placeholder="Easy, Medium, Hard"
+            />
           </div>
 
           <div className="flex flex-col">
@@ -169,6 +180,7 @@ const AddScreen = () => {
 
         <div className="pb-4">
           <Button
+            onClick={handleForm}
             variant="outline"
             className="rounded hover:bg-slate-200"
             type="submit"
