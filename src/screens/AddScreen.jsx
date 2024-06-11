@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import uploadImage from "../utils/uploadImage";
 
 import {
   Command,
@@ -88,17 +89,6 @@ const AddScreen = () => {
           </div>
 
           <div>
-            <Label htmlFor="description" className="mb-1">
-              Description
-            </Label>
-            <Textarea
-              id="description"
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
-            />
-          </div>
-
-          <div>
             <Label className="mb-2" htmlFor="ing">
               Ingredients{" "}
               <span className="text-gray-600">(Separate With ,)</span>
@@ -114,68 +104,85 @@ const AddScreen = () => {
 
           <div>
             <Label className="mb-2" htmlFor="level">
-              Level
+              Level <span className="text-gray-600">(Easy,Medium,Hard)</span>
             </Label>
             <Input
               value={level}
               onChange={(e) => setLevel(e.target.value)}
               id="level"
-              placeholder="Easy, Medium, Hard"
             />
           </div>
 
-          <div className="flex flex-col">
-            <Label className="mb-2">Category</Label>
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={open}
-                  className="w-[200px] justify-between"
-                >
-                  {value
-                    ? categories.find((category) => category.value === value)
-                        ?.label
-                    : "Select category..."}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 " />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[200px] p-0 bg-slate-300">
-                <Command>
-                  <CommandInput placeholder="Search category..." />
-                  <CommandList>
-                    <CommandEmpty>No category found.</CommandEmpty>
-                    <CommandGroup>
-                      {categories.map((category) => (
-                        <CommandItem
-                          key={category.value}
-                          value={category.value}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? "" : currentValue
-                            );
-                            setOpen(false);
-                          }}
-                          className="cursor-pointer"
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              value === category.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {category.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
+          <div>
+            <Label htmlFor="description" className="mb-1">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            />
           </div>
+
+          <div className="">
+            <Label htmlFor="image">Image</Label>
+            <Input
+              onChange={(e) => uploadImage(e.target.files)}
+              id="image"
+              type="file"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col">
+          <Label className="mb-2">Category</Label>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-[200px] justify-between"
+              >
+                {value
+                  ? categories.find((category) => category.value === value)
+                      ?.label
+                  : "Select category..."}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 " />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0 bg-slate-300">
+              <Command>
+                <CommandInput placeholder="Search category..." />
+                <CommandList>
+                  <CommandEmpty>No category found.</CommandEmpty>
+                  <CommandGroup>
+                    {categories.map((category) => (
+                      <CommandItem
+                        key={category.value}
+                        value={category.value}
+                        onSelect={(currentValue) => {
+                          setValue(currentValue === value ? "" : currentValue);
+                          setOpen(false);
+                        }}
+                        className="cursor-pointer"
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            value === category.value
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {category.label}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div className="pb-4">
