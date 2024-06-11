@@ -74,6 +74,12 @@ const AddScreen = () => {
       .map((value) => removeSpacesFromStringStart(value));
 
     dispatch(addRecipe({ name, desc, ing, level, imgUrl, value }));
+    setName("");
+    setDesc("");
+    setLevel("");
+    setIngValue("");
+    setImgUrl("");
+    toast.success("Recipe Added.");
   };
 
   const handleFile = (file) => {
@@ -91,14 +97,15 @@ const AddScreen = () => {
     uploadTask.on(
       "state_changed",
       (snapShot) => {
-        console.log(snapShot);
+        // console.log(snapShot);
       },
       (error) => {
-        console.log(error);
+        toast.error(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgUrl(downloadURL);
+          toast.success("Image Uploaded Successfully.");
         });
       }
     );

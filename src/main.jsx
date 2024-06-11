@@ -12,10 +12,12 @@ import Hero from "./components/Hero.jsx";
 import { store } from "./store.js";
 import { Provider } from "react-redux";
 import AddScreen from "./screens/AddScreen.jsx";
+import HomeScreen from "./screens/HomeScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
+      <Route path="/" element={<HomeScreen />} />
       <Route path="/about" element={<Hero />} />
       <Route path="/add" element={<AddScreen />} />
     </Route>
