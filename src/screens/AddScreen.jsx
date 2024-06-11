@@ -4,8 +4,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import uploadImage from "../utils/uploadImage";
-
+import { storage } from "../config/firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { addRecipe } from "@/slices/recipeSlice";
 import {
   Command,
   CommandEmpty,
@@ -22,6 +23,7 @@ import {
 
 import { Check, ChevronsUpDown } from "lucide-react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const AddScreen = () => {
   const [open, setOpen] = useState(false);
@@ -30,7 +32,8 @@ const AddScreen = () => {
   const [desc, setDesc] = useState("");
   const [ingValue, setIngValue] = useState("");
   const [level, setLevel] = useState("");
-
+  const [imgUrl, setImgUrl] = useState("");
+  const dispatch = useDispatch();
   const categories = [
     {
       value: "BreakFast",
@@ -56,17 +59,48 @@ const AddScreen = () => {
 
   const handleForm = (e) => {
     e.preventDefault();
-    // if (
-    //   name.trim() === "" ||
-    //   (desc.trim() === "") | (ingValue.length === 0) ||
-    //   level.trim() === ""
-    // ) {
-    //   toast.error("All fields are required.");
-    //   return;
-    // }
+    if (
+      name.trim() === "" ||
+      (desc.trim() === "") | (ingValue.length === 0) ||
+      level.trim() === "" ||
+      imgUrl.trim() === ""
+    ) {
+      toast.error("All fields are required.");
+      return;
+    }
 
-    console.log(
-      ingValue.split(",").map((ing) => removeSpacesFromStringStart(ing))
+    const ing = ingValue
+      .split(",")
+      .map((value) => removeSpacesFromStringStart(value));
+
+    dispatch(addRecipe({ name, desc, ing, level, imgUrl, value }));
+  };
+
+  const handleFile = (file) => {
+    const orgFile = file[0];
+    if (!orgFile) {
+      return;
+    }
+
+    const storageRef = ref(
+      storage,
+      `files/${orgFile.name}-id-${Math.random().toString(16).slice(2)}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, orgFile);
+
+    uploadTask.on(
+      "state_changed",
+      (snapShot) => {
+        console.log(snapShot);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImgUrl(downloadURL);
+        });
+      }
     );
   };
 
@@ -127,7 +161,7 @@ const AddScreen = () => {
           <div className="">
             <Label htmlFor="image">Image</Label>
             <Input
-              onChange={(e) => uploadImage(e.target.files)}
+              onChange={(e) => handleFile(e.target.files)}
               id="image"
               type="file"
             />

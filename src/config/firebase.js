@@ -9,7 +9,5 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
 };
 
-console.log(firebaseConfig);
-
 export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);

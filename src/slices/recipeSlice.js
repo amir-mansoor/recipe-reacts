@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  recipies: [],
+  recipies: localStorage.getItem("items")
+    ? JSON.parse(localStorage.getItem("items"))
+    : [],
 };
 
 export const recipeSlice = createSlice({
@@ -9,12 +11,13 @@ export const recipeSlice = createSlice({
   initialState,
   reducers: {
     addRecipe: (state, action) => {
-      state.value -= 1;
+      state.recipies.push(action.payload);
+      localStorage.setItem("items", JSON.stringify(state.recipies));
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { decrement } = recipeSlice.actions;
+export const { addRecipe } = recipeSlice.actions;
 
 export default recipeSlice.reducer;
