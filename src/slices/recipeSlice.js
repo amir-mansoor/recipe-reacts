@@ -14,10 +14,20 @@ export const recipeSlice = createSlice({
       state.recipies.push(action.payload);
       localStorage.setItem("items", JSON.stringify(state.recipies));
     },
+
+    addToFavourite: (state, action) => {
+      state.recipies.map((recipy) => {
+        if (recipy.id === action.payload.id) {
+          recipy.favourite = !recipy.favourite;
+        }
+      });
+
+      localStorage.setItem("items", JSON.stringify(state.recipies));
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addRecipe } = recipeSlice.actions;
+export const { addRecipe, addToFavourite } = recipeSlice.actions;
 
 export default recipeSlice.reducer;

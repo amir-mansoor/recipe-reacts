@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addToFavourite } from "@/slices/recipeSlice";
 
 const RecipyDetailsScreen = () => {
   const { id } = useParams();
   const { recipies } = useSelector((state) => state.recipe);
+  const dispatch = useDispatch();
 
   const recipy = recipies.find((recipy) => recipy.id === id);
 
@@ -34,9 +36,23 @@ const RecipyDetailsScreen = () => {
           )}
           <p>Level: {recipy?.level}</p>
           <p>For: {recipy?.value}</p>
-          <Button variant="outline" className="rounded">
-            Add To Favourite
-          </Button>
+          {recipy?.favourite ? (
+            <Button
+              variant="outline"
+              className="rounded"
+              onClick={() => dispatch(addToFavourite({ id: recipy?.id }))}
+            >
+              Remove From Favourite
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="rounded"
+              onClick={() => dispatch(addToFavourite({ id: recipy?.id }))}
+            >
+              Add To Favourite
+            </Button>
+          )}
         </div>
       </div>
     </div>
