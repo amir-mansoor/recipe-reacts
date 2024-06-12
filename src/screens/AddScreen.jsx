@@ -73,7 +73,9 @@ const AddScreen = () => {
       .split(",")
       .map((value) => removeSpacesFromStringStart(value));
 
-    dispatch(addRecipe({ name, desc, ing, level, imgUrl, value }));
+    const id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
+    dispatch(addRecipe({ id, name, desc, ing, level, imgUrl, value }));
     setName("");
     setDesc("");
     setLevel("");
