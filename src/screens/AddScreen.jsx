@@ -75,7 +75,9 @@ const AddScreen = () => {
 
     const id = Date.now().toString(36) + Math.random().toString(36).substr(2);
 
-    dispatch(addRecipe({ id, name, desc, ing, level, imgUrl, value }));
+    dispatch(
+      addRecipe({ id, name, desc, ing, level, imgUrl, value, favourite: false })
+    );
     setName("");
     setDesc("");
     setLevel("");

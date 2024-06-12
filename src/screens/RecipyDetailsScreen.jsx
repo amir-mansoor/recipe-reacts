@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const RecipyDetailsScreen = () => {
 
   return (
     <div className="container mx-auto mt-10 max-h-max min-h-[80vh]">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2">
         <div>
           <div>
             <img
@@ -19,7 +20,7 @@ const RecipyDetailsScreen = () => {
             />
           </div>
         </div>
-        <div>
+        <div className="bg-slate-300 rounded p-2  shadow-lg transition-all hover:scale-110">
           <h1 className="text-4xl font-bold text-gray-700">{recipy?.name}</h1>
           <p className="mt-2">{recipy?.desc}</p>
           <p>Ingredients: </p>{" "}
@@ -33,6 +34,9 @@ const RecipyDetailsScreen = () => {
           )}
           <p>Level: {recipy?.level}</p>
           <p>For: {recipy?.value}</p>
+          <Button variant="outline" className="rounded">
+            Add To Favourite
+          </Button>
         </div>
       </div>
     </div>
