@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import AddScreen from "./screens/AddScreen.jsx";
 import HomeScreen from "./screens/HomeScreen.jsx";
 import RecipyDetailsScreen from "./screens/RecipyDetailsScreen.jsx";
+import FavouriteScreen from "./screens/FavouriteScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/about" element={<Hero />} />
       <Route path="/add" element={<AddScreen />} />
       <Route path="/recipy/:id" element={<RecipyDetailsScreen />} />
+      <Route path="/liked" element={<FavouriteScreen />} />
     </Route>
   )
 );

@@ -22,7 +22,7 @@ const RecipyDetailsScreen = () => {
             />
           </div>
         </div>
-        <div className="bg-slate-300 rounded p-2  shadow-lg transition-all hover:scale-110">
+        <div className="bg-slate-300 h-[60vh] overflow-x-auto rounded p-2  shadow-lg transition-all hover:scale-110">
           <h1 className="text-4xl font-bold text-gray-700">{recipy?.name}</h1>
           <p className="mt-2">{recipy?.desc}</p>
           <p>Ingredients: </p>{" "}
