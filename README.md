@@ -11,4 +11,5 @@ Currently, two official plugins are available:
 2. git clone repo from your profile
 3. make changes.
 4. push code to your repo.
-5. submit a pull request.
+5. make sure to create a branch while pushing to repository.
+6. submit a pull request.
