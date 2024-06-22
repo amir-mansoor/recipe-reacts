@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import aboutUsImage from '../assets/palak.jpg';
 const Hero = () => {
   return (
+    // about us page
     <section>
       <section className='bg-gray-100'>
         <div className='container mx-auto py-16 px-4 sm:px-6 lg:px-8'>
