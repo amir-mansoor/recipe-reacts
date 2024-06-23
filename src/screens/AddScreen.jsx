@@ -116,6 +116,7 @@ const AddScreen = () => {
   };
 
   return (
+    // styles changed
     <div className='container  bg-gray-100 py-10'>
       <div className='px-[100px]'>
         <h1 className='text-4xl font-bold'>Add Recipe</h1>
