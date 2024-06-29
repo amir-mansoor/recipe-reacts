@@ -9,6 +9,14 @@ Currently, two official plugins are available:
 
 1. Fork the repository
 2. git clone repo from your profile
+- Extra Step
+to setup a whole project first of all you need to run this command
+```bash
+mv .env.example .env
+```
+- now create a project on firebase then setup the web app.
+- copy the each api key and add to .env
+
 3. make changes.
 4. push code to your repo.
 5. make sure to create a branch while pushing to repository.
